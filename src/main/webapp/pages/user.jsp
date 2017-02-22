@@ -77,6 +77,20 @@
             </div>
         </a>
     </div>
+
+    <div class="info_list">
+        <a href="/mobile/judgement_list?f_user_id=${uid}&time=<%=System.currentTimeMillis()%>&token=${token}">
+            <div class="info_one">
+                <hr style="background: #f2f2f2;height: 1px;border: none"/>
+                <span></span><img src="http://cdn.xingkeduo.com/image/mobile3/evaluate_gray_icon.png"/>
+                <span class="checked_title">历史评价</span>
+                <div class="checked_info_main">
+                    <span></span><img src="http://cdn.xingkeduo.com/image/mobile3/checked_icon.png"/>
+                </div>
+            </div>
+        </a>
+
+    </div>
     <!--选择信息列表End-->
     <div class="gap"></div>
     <!--底部导航栏-->

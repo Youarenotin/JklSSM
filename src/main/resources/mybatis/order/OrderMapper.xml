@@ -36,7 +36,8 @@
         UPDATE
         jkl_order
         SET
-        is_judge=#{is_judge}
+        is_judge=#{is_judge},
+        state=#{state}
         where
         jkl_order_id = #{order_id}
     </update>

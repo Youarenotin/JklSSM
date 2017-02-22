@@ -19,6 +19,7 @@ import sun.org.mozilla.javascript.internal.regexp.SubString;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -228,10 +229,12 @@ public class Mobile {
         pd.put("stars", starts);
         pd.put("labels_str", labels_str);
         Object o = commentService.insertOneComment(pd);
-        //跟新该订单是否评价标志
+        //更新该订单是否评价标志
+        //更新该订单状态
         PageData pdd = new PageData();
         pdd.put("order_id", order_id);
         pdd.put("is_judge", 1);
+        pdd.put("state",2);
         orderService.updateStateByOrder_id(pdd);
         //评价是否成功
         if (o != null)
@@ -260,11 +263,16 @@ public class Mobile {
      * 获取用户历史评价
      * @return
      */
-    @RequestMapping("judgement_list")
-    public String getJudgementListpage(@Param("uid") String uid , @Param("time") String time , @Param("token") String token) throws Exception {
+    @RequestMapping("/judgement_list")
+    public String getJudgementListpage(Model model, @Param("uid") String uid , @Param("time") String time , @Param("token") String token) throws Exception {
         //校验用户合法性
         if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
-
+        model.addAttribute("uid", uid);
+        model.addAttribute("token", token);
+        PageData query = new PageData();
+        query.put("uid",uid);
+        PageData judgeList = commentService.findAllByuidsid(query);
+        model.addAttribute("commentHistoryList",judgeList);
         return "judgement_list.jsp";
     }
 

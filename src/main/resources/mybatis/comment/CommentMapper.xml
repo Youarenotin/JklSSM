@@ -11,12 +11,21 @@
         labels_str,
         mobile,
         comment,
-        store_id
+        store_id,
+        uid
         )
         values(
-        #{order_id},now(),#{stars},#{labels_str},#{mobile},#{comment},#{store_id}
+        #{order_id},now(),#{stars},#{labels_str},#{mobile},#{comment},#{store_id},#{uid}
         )
     </insert>
 
-
+    <select id="findall" parameterType="pd" resultType="pd">
+        select
+        *
+        FROM
+        jkl_comment
+        WHERE
+        uid = #{uid}
+        ORDER  BY create_time  DESC
+    </select>
 </mapper>

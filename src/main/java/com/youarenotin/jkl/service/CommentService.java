@@ -18,4 +18,9 @@ public class CommentService {
     public Object  insertOneComment(PageData pd) throws Exception {
       return  dao.save("Comment.add", pd);
     }
+
+
+    public PageData findAllByuidsid(PageData pd) throws Exception {
+        return (PageData) dao.findForList("Comment.findall",pd);
+    }
 }
