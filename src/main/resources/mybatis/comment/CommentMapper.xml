@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Comment">
+    <insert id="add" parameterType="pd" useGeneratedKeys="true" keyProperty="id" >
+        INSERT  INTO
+        jkl_comment(
+        order_id,
+        create_time,
+        stars,
+        labels_str,
+        mobile,
+        comment,
+        store_id
+        )
+        values(
+        #{order_id},now(),#{stars},#{labels_str},#{mobile},#{comment},#{store_id}
+        )
+    </insert>
+
+
+</mapper>

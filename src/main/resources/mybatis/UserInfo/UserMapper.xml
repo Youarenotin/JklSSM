@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+    <resultMap id="userResultMap" type="UserAlias">
+        <id column="id" property="id"/>
+        <result column="open_id" property="open_id"/>
+        <result column="create_time" property="create_time"/>
+        <result column="token" property="token"/>
+    </resultMap>
+    <!--新增用户-->
+    <insert id="addUser" parameterType="UserAlias" >
+        INSERT  INTO
+        jkl_user
+        (
+        open_id ,
+        create_time ,
+        token
+        )
+        values(
+          #{open_id},
+          now(),
+          md5(concat(#{open_id},"SSDD0725"))
+        )
+    </insert>
+
+    <!---->
+    <delete id="deleteById" parameterType="UserAlias" flushCache="false">
+        DELETE FROM
+        jkl_user
+        WHERE
+        id=#{id}
+    </delete>
+
+    <select id="findByOpenId" parameterType="String" resultMap="userResultMap">
+        SELECT
+        id,
+        open_id,
+        create_time,
+        token
+        FROM
+         jkl_user
+        WHERE
+        open_id=#{open_id}
+    </select>
+
+    <select id="findOpenidById" parameterType="String" resultMap="userResultMap">
+        SELECT
+        *
+        FROM
+        jkl_user
+        WHERE
+        id=#{id}
+    </select>
+</mapper>

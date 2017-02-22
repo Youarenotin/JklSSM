@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Order">
+    <!--新增订单-->
+    <insert id="addOrder" parameterType="pd">
+        INSERT  INTO
+        jkl_order(
+        wx_order_id ,
+        create_time ,
+        store_id,
+        operate_id,
+         is_judge,
+         total_price,
+         queue_num,
+         state)
+        values(
+        #{wx_order_id},now(),#{store_id},#{operate_id},#{is_judge},#{total_price},#{queue_num},#{state}
+          )
+        )
+    </insert>
+
+
+
+
+    <select id="findAllOrderByUid" parameterType="pd" resultType="pd">
+        SELECT
+        *
+        FROM
+        jkl_order
+        WHERE
+        uid=#{uid}
+    </select>
+
+    <update id="updateStateByOrderid" parameterType="pd">
+        UPDATE
+        jkl_order
+        SET
+        is_judge=#{is_judge}
+        where
+        jkl_order_id = #{order_id}
+    </update>
+
+    <insert id="insertOneOrder" parameterType="pd">
+        INSERT
+        jkl_order
+        (
+          wx_order_id,
+          ali_order_id,
+          jkl_order_id,
+          store_id,
+          operate_id,
+          create_time,
+          is_judge,
+          queue_num,
+          state,
+          uid,
+          judge,
+          total_price,
+          judge_level
+        )
+        VALUES(
+        #{wx_order_id},
+        #{ali_order_id}
+        #{jkl_order_id},
+        #{store_id},
+        #{operate_id},
+        now(),
+        #{is_judge},
+        #{queue_num},
+        #{state},
+        #{uid},
+        #{judge},
+        #{total_price},
+        #{judge_level}
+        )
+
+    </insert>
+</mapper>
