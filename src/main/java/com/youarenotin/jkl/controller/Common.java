@@ -23,14 +23,14 @@ import javax.annotation.Resource;
  */
 @Controller
 public class Common {
-        public static final String HOST = "http://youarenotinceshi.ngrok.cc";
+        public static final String HOST = "http://youarenotinceshi.ngrok.cc/mobile/user";
 //    public static final String HOST = "http://localhost:8080";
 
     @Resource(name = "userMannagerService")
     private UserMannagerService userMannagerService;
 
     @RequestMapping("/wechat/oauth/state/{stateValue}")
-    public String oauth(@PathVariable("stateValue") String state) {
+    public String oauth(@PathVariable("stateValue") String state,Model model) {
 //        switch (state) {
 //            case "1":
 ////                正式环境
@@ -39,19 +39,21 @@ public class Common {
 //            return "";
 //        }
         //测试环境
-        return testJsp(state);
+        return testJsp(state,model);
     }
 
-    private String testJsp(String state) {
+    private String testJsp(String state, Model model) {
         //模拟帐号
         User user = new User();
         user.setOpen_id("oFoEOw4KVvqNcE2vdXEyWAdz5vPM");
         user.setId("10002");
         user.setCreate_time("2017-02-16 17:04:56");
         user.setToken("a49b141906d0f158901d9630a748f61e");
-        //重定向到个人页面
+        model.addAttribute("uid",user.getId());
+        model.addAttribute("token",user.getToken());
+        //重定向到个人页面  + "/mobile/user?uid=" + user.getId() + "&time=" + System.currentTimeMillis() + "&token=" + user.getToken();
         if (state.equals("1")) {
-            return "redirect:" + HOST + "/mobile/user?uid=" + user.getId() + "&time=" + System.currentTimeMillis() + "&token=" + user.getToken();
+            return "redirect:" + HOST ;
         }
         //重定向到订单页面
         if (state.equals("2")) {

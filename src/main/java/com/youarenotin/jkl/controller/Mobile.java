@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Created by dell on 2/17 0017.
@@ -271,7 +272,24 @@ public class Mobile {
         model.addAttribute("token", token);
         PageData query = new PageData();
         query.put("uid",uid);
-        PageData judgeList = commentService.findAllByuidsid(query);
+        List<PageData> judgeList = commentService.findAllByuidsid(query);
+        for (PageData data : judgeList) {
+            if (data.getString("comment").equals("默认好评")|| data.getString("comment").equals("")){
+                data.put("defaultComment", true);
+            }
+            else {
+                data.put("defaultComment",false);
+            }
+            String labels_str = data.getString("labels_str");
+            String[] split = labels_str.split(",");
+            ArrayList<String> list = new ArrayList<>();
+            for (int i = 0; i < split.length; i++) {
+                list.add(split[i]);
+            }
+            if (!list.isEmpty()) {
+                data.put("labels",list);
+            }
+        }
         model.addAttribute("commentHistoryList",judgeList);
         return "judgement_list.jsp";
     }

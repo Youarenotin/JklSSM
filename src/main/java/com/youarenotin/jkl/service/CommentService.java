@@ -20,7 +20,7 @@ public class CommentService {
     }
 
 
-    public PageData findAllByuidsid(PageData pd) throws Exception {
-        return (PageData) dao.findForList("Comment.findall",pd);
+    public List<PageData> findAllByuidsid(PageData pd) throws Exception {
+        return (List<PageData>) dao.findForList("Comment.findall",pd);
     }
 }
