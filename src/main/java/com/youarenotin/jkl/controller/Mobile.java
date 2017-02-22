@@ -289,6 +289,12 @@ public class Mobile {
             if (!list.isEmpty()) {
                 data.put("labels",list);
             }
+            PageData data1 = new PageData();
+            data1.put("id",data.get("store_id"));
+            PageData rlt = storeService.findStoreByid(data1);
+            if (rlt != null && !rlt.getString("store_img").isEmpty()) {
+                data.put("store_img",rlt.getString("store_img"));
+            }
         }
         model.addAttribute("commentHistoryList",judgeList);
         return "judgement_list.jsp";
