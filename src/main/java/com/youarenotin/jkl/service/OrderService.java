@@ -24,6 +24,10 @@ public class OrderService {
     }
 
     public void insertOneOrder(PageData pd) throws Exception {
-        dao.save("Order.insertOneOrder",pd);
+        dao.save("Order.insertOneOrder", pd);
+    }
+
+    public List<PageData> findNormalQueue(PageData pd) throws Exception {
+        return (List<PageData>) dao.findForList("Order.findNormalQueueBysid", pd);
     }
 }

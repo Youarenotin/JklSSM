@@ -23,14 +23,14 @@ import javax.annotation.Resource;
  */
 @Controller
 public class Common {
-        public static final String HOST = "http://youarenotinceshi.ngrok.cc/mobile/user";
+    public static final String HOST = "http://youarenotinceshi.ngrok.cc";
 //    public static final String HOST = "http://localhost:8080";
 
     @Resource(name = "userMannagerService")
     private UserMannagerService userMannagerService;
 
     @RequestMapping("/wechat/oauth/state/{stateValue}")
-    public String oauth(@PathVariable("stateValue") String state,Model model) {
+    public String oauth(@PathVariable("stateValue") String state, Model model) {
 //        switch (state) {
 //            case "1":
 ////                正式环境
@@ -39,7 +39,7 @@ public class Common {
 //            return "";
 //        }
         //测试环境
-        return testJsp(state,model);
+        return testJsp(state, model);
     }
 
     private String testJsp(String state, Model model) {
@@ -49,23 +49,23 @@ public class Common {
         user.setId("10002");
         user.setCreate_time("2017-02-16 17:04:56");
         user.setToken("a49b141906d0f158901d9630a748f61e");
-        model.addAttribute("uid",user.getId());
-        model.addAttribute("token",user.getToken());
+        model.addAttribute("uid", user.getId());
+        model.addAttribute("token", user.getToken());
         //重定向到个人页面  + "/mobile/user?uid=" + user.getId() + "&time=" + System.currentTimeMillis() + "&token=" + user.getToken();
         if (state.equals("1")) {
-            return "redirect:" + HOST ;
+            return "redirect:" + HOST + "/mobile/user ";
         }
         //重定向到订单页面
         if (state.equals("2")) {
-            return "redirect:" + HOST + "/mobile/order_list?uid=" + user.getId() + "&time=" + System.currentTimeMillis() + "&token=" + user.getToken();
+            return "redirect:" + HOST + "/mobile/order_list";//uid=" + user.getId() + "&time=" + System.currentTimeMillis() + "&token=" + user.getToken()
         }
         //重定向到店铺页面
         if (state.equals("3")) {
-            return "redirect:" + HOST + "/mobile/store_list?uid=" + user.getId() + "&time=" + System.currentTimeMillis() + "&token=" + user.getToken();
+            return "redirect:" + HOST + "/mobile/store_list";//uid=" + user.getId() + "&time=" + System.currentTimeMillis() + "&token=" + user.getToken();
         }
         //重定向到更多页面
         if (state.equals("4")) {
-            return "redirect:" + HOST + "/mobile/more_read?uid=" + user.getId() + "&time=" + System.currentTimeMillis() + "&token=" + user.getToken();
+            return "redirect:" + HOST + "/mobile/more_read";//uid=" + user.getId() + "&time=" + System.currentTimeMillis() + "&token=" + user.getToken();
         }
         return null;
     }
@@ -102,17 +102,12 @@ public class Common {
         }
         switch (state) {
             case "1"://个人页面
-//                ModelAndView modelAndView = new ModelAndView("personal.jsp");
-//                modelAndView.addObject("nickname",userInfoVo.getNickname());
-//                modelAndView.addObject("headimgurl",userInfoVo.getHeadimgurl());
                 String nickname = userInfoVo.getNickname();
                 String headimgurl = userInfoVo.getHeadimgurl();
                 System.out.println(nickname);
                 System.out.println(headimgurl);
                 model.addAttribute("nickname", nickname);
                 model.addAttribute("headimgurl", headimgurl);
-//                model.addAttribute("hello","helloworld");
-//                return modelAndView;
                 return "personal.jsp";
             default:
                 break;

@@ -6,4 +6,5 @@ package com.youarenotin.jkl.App;
 public interface Constant {
     String token ="123456";
     String solt="SSDD0725";
+    
 }
