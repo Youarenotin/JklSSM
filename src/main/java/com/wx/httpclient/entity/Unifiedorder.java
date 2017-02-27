@@ -19,41 +19,43 @@ public class Unifiedorder {
 	private String appid = Constants.APPID;
 	//商户号
 	private String mch_id =Constants.MCH_ID;
-	//设备号
+	//设备号(否)
 	private String device_info;
 	//随机字符串
 	private String nonce_str = UuidUtil.get32UUID();
 	//签名
 	private String sign;
+	//签名类型(否)
+	private String sign_type;
 	//商品描述
 	private String body;
-	//商品详情
+	//商品详情(否)
 	private String detail;
-	//附加数据
+	//附加数据（否）
 	private String attach;
 	//商户订单号
 	private String out_trade_no;
-	//货币类型
+	//货币类型(否)
 	private String fee_type;
-	//总金额
+	//标价金额
 	private String total_fee;
 	//终端IP
 	private String spbill_create_ip;
-	//交易起始时间
+	//交易起始时间(否)
 	private String time_start;
-	//交易结束时间
+	//交易结束时间(否)
 	private String time_expire;
-	//商品标记
+	//商品标记(否)
 	private String goods_tag;
 	//通知地址
 	private String notify_url;
-	//交易类型
+	//交易类型 取值如下：JSAPI，NATIVE，APP
 	private String trade_type;
-	//商品ID
+	//商品ID(否)
 	private String product_id;
-	//指定支付方式
+	//指定支付方式(否) 上传此参数no_credit--可限制用户不能使用信用卡支付
 	private String limit_pay;
-	//用户标识
+	//用户标识(否)
 	private String openid;
 
 	public String getAppid() {
@@ -256,6 +258,14 @@ public class Unifiedorder {
 	public boolean checkData(){
 		if(StringUtil.isNull(appid,mch_id,nonce_str,sign,body,out_trade_no,total_fee,spbill_create_ip,notify_url,trade_type))return false;
 		return true;
+	}
+
+	public String getSign_type() {
+		return sign_type;
+	}
+
+	public void setSign_type(String sign_type) {
+		this.sign_type = sign_type;
 	}
 //	public String toXML(){
 //		Document document = DocumentHelper.createDocument();
