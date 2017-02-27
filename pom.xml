@@ -66,22 +66,12 @@
       <artifactId>httpclient</artifactId>
       <version>4.5</version>
     </dependency>
-    <!--mysql数据库驱动 -->
-    <!--<dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.38</version>
-    </dependency>-->
-    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>5.0.5</version>
     </dependency>
-
-
-
 
     <!--log4j日志包 -->
     <!-- https://mvnrepository.com/artifact/log4j/log4j -->
@@ -97,6 +87,7 @@
       <artifactId>mybatis</artifactId>
       <version>3.4.1</version>
     </dependency>
+
     <!--mybatis-spring适配器 -->
     <dependency>
       <groupId>org.mybatis</groupId>
@@ -126,6 +117,25 @@
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <version>2.4</version>
+    </dependency>
+
+    <!--<dependency>-->
+      <!--<groupId>org.slf4j</groupId>-->
+      <!--<artifactId>slf4j-api</artifactId>-->
+      <!--<version>1.7.5</version>-->
+    <!--</dependency>-->
+
+    <!--<dependency>-->
+      <!--<groupId>org.slf4j</groupId>-->
+      <!--<artifactId>slf4j-log4j12</artifactId>-->
+      <!--<version>1.7.5</version>-->
+    <!--</dependency>-->
+
+    <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.8.5</version>
     </dependency>
 
 

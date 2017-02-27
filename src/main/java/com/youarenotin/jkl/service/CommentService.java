@@ -3,6 +3,7 @@ package com.youarenotin.jkl.service;
 import com.youarenotin.jkl.dao.DaoSupport;
 import com.youarenotin.jkl.util.PageData;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -15,6 +16,7 @@ public class CommentService {
     @Resource(name = "daoSupport")
     private DaoSupport dao;
 
+    @Transactional
     public Object  insertOneComment(PageData pd) throws Exception {
       return  dao.save("Comment.add", pd);
     }

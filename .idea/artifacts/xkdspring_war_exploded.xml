@@ -45,6 +45,7 @@
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.19" />
           <element id="library" level="project" name="Maven: com.alibaba:druid:1.0.20" />
           <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.8.5" />
         </element>
       </element>
       <element id="directory" name="META-INF">
