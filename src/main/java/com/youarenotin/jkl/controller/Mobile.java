@@ -54,14 +54,14 @@ public class Mobile {
     @RequestMapping("/user")
     public String getUserPage(@Param("uid") String uid, @Param("token") String token, @Param("time") String time, Model model) throws Exception {
         //校验用户合法性
-        StringBuilder sb = new StringBuilder();
-        Object userVo = (User) userMannagerService.findOpenIdById(uid);
-        if (userVo == null || !(userVo instanceof User))
-            return "404.jsp";
-        sb.append(((User) userVo).getOpen_id()).append(Constant.solt);
-        if (!token.equals(MD5.md5(sb.toString()))) {
-            return "404.jsp";
-        }
+//        StringBuilder sb = new StringBuilder();
+//        Object userVo = (User) userMannagerService.findOpenIdById(uid);
+//        if (userVo == null || !(userVo instanceof User))
+//            return "404.jsp";
+//        sb.append(((User) userVo).getOpen_id()).append(Constant.solt);
+//        if (!token.equals(MD5.md5(sb.toString()))) {
+//            return "404.jsp";
+//        }
         model.addAttribute("uid", uid);
         model.addAttribute("token", token);
         return "user.jsp";
@@ -132,7 +132,7 @@ public class Mobile {
     @RequestMapping("/order_list")
     public String getOrderListPage(@Param("uid") String uid, @Param("token") String token, @Param("time") String time, Model model) throws Exception {
         //校验用户合法性
-        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
+//        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
         model.addAttribute("uid", uid);
         model.addAttribute("token", token);
         PageData queryData = new PageData();
@@ -181,7 +181,7 @@ public class Mobile {
     @RequestMapping("/judgement")
     public String getJudgeMentPage(Model model, @Param("jkl_order_id") String jkl_order_id, @Param("store_id") String store_id, @Param("uid") String uid, @Param("time") String time, @Param("token") String token) throws Exception {
         //校验用户合法性
-        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
+//        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
         PageData query = new PageData();
         query.put("id", store_id);
         PageData rlt = storeService.findStoreByid(query);
@@ -220,7 +220,7 @@ public class Mobile {
                                    @RequestParam(value = "labels_str") String labels_str
     ) throws Exception {
         //校验用户合法性
-        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
+//        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
         //拆入评价入库
         PageData pd = new PageData();
         pd.put("uid", uid);
@@ -255,7 +255,7 @@ public class Mobile {
     @RequestMapping(value = "/store_detail", method = RequestMethod.GET)
     public String getStoreDetailPage(@Param("uid") String uid, @Param("store_id") String store_id, @Param("time") String time, @Param("token") String token) throws Exception {
         //校验用户合法性
-        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
+//        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
 
         return "store_detail.jsp";
     }
@@ -267,7 +267,7 @@ public class Mobile {
     @RequestMapping("/judgement_list")
     public String getJudgementListpage(Model model, @Param("uid") String uid , @Param("time") String time , @Param("token") String token) throws Exception {
         //校验用户合法性
-        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
+//        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
         model.addAttribute("uid", uid);
         model.addAttribute("token", token);
         PageData query = new PageData();

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="ShiroRealm" />
+    </bean>
+
+    <!-- 項目自定义的Realm -->
+    <bean id="ShiroRealm" class="com.youarenotin.jkl.interceptor.shiro.ShiroRealm"/>
+
+    <bean id="appUserAuthFilter" class="com.youarenotin.jkl.interceptor.shiro.AppUserAuthFilter"/>
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="filters">
+            <map>
+                <entry key="authApp" value-ref="appUserAuthFilter"/>
+            </map>
+        </property>
+
+        <property name="securityManager" ref="securityManager"/>
+
+        <property name="loginUrl" value="/mobile"/>
+        
+        <property name="filterChainDefinitions" >
+            <value>
+                /mobile/** = authc
+                /android/**=authc
+            </value>
+        </property>
+
+    </bean>
+</beans>
