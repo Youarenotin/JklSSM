@@ -1,6 +1,7 @@
 package com.youarenotin.jkl.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.youarenotin.jkl.App.Constant;
 import com.youarenotin.jkl.service.OrderService;
 import com.youarenotin.jkl.util.PageData;
 import org.springframework.data.repository.query.Param;
@@ -30,6 +31,7 @@ public class Android {
     public String getAndroidClientData(Model model, @Param("store_id") String store_id) throws Exception {
         //微信公众号二维码
         //扫码支付二维码
+        model.addAttribute("wxQrcode" , Constant.FACE_PAY_COMMON_URL+"?store_id="+store_id);
         //叫号号码
         //预计等待时间
         //排队人数
