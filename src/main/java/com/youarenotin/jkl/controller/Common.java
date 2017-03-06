@@ -1,10 +1,12 @@
 package com.youarenotin.jkl.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.youarenotin.jkl.Entity.Access_token;
 import com.youarenotin.jkl.Entity.User.User;
 import com.youarenotin.jkl.Entity.UserInfo;
 import com.youarenotin.jkl.service.UserMannagerService;
+import com.youarenotin.jkl.util.PageData;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -31,15 +33,15 @@ public class Common {
 
     @RequestMapping("/wechat/oauth/state/{stateValue}")
     public String oauth(@PathVariable("stateValue") String state, Model model) {
-//        switch (state) {
-//            case "1":
-////                正式环境
-//                return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8b5a0818b019401c&redirect_uri=http%3A%2F%2Fyouarenotinceshi.ngrok.cc%2FgetCode&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
-//            default:
-//            return "";
-//        }
+        switch (state) {
+            case "1":
+//                正式环境
+                return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8b5a0818b019401c&redirect_uri=http%3A%2F%2Fyouarenotinceshi.ngrok.cc%2FgetCode&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
+            default:
+                return "";
+        }
         //测试环境
-        return testJsp(state, model);
+//        return testJsp(state, model);
     }
 
     private String testJsp(String state, Model model) {
@@ -93,12 +95,18 @@ public class Common {
         CloseableHttpResponse responseUserInfo = client.execute(getUserInfo);
         String userInfo = EntityUtils.toString(responseUserInfo.getEntity(), "utf-8");
         UserInfo userInfoVo = JSON.parseObject(userInfo, UserInfo.class);
-        User user = new User();
-//        user.setOpen_id(userInfoVo.getOpenid());
-        user.setOpen_id(userInfoVo.getOpenid());
-        User userBySelect = (User) userMannagerService.findByOpenId(user.getOpen_id());
-        if (userBySelect == null || userBySelect.getOpen_id().isEmpty()) {
-            userMannagerService.saveUser(user);
+        PageData pd = new PageData();
+        pd.put("openid",userInfoVo.getOpenid());
+        pd.put("nickname",userInfoVo.getNickname());
+        pd.put("city",userInfoVo.getCity());
+        pd.put("country", userInfoVo.getCountry());
+        pd.put("headimgurl",userInfoVo.getHeadimgurl());
+        pd.put("unionid",userInfoVo.getUnionid());
+        pd.put("province",userInfoVo.getProvince());
+        PageData userBySelect =  userMannagerService.findByOpenId(pd);
+        if (userBySelect == null || userBySelect.getString("openid").isEmpty()) {
+
+            userMannagerService.saveUser(pd);
         }
         switch (state) {
             case "1"://个人页面

@@ -3,6 +3,7 @@ package com.youarenotin.jkl.controller;
 import com.alibaba.fastjson.JSON;
 import com.youarenotin.jkl.App.Constant;
 import com.youarenotin.jkl.service.OrderService;
+import com.youarenotin.jkl.service.UserMannagerService;
 import com.youarenotin.jkl.util.PageData;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +27,11 @@ import java.util.Map;
 public class Android {
     @Resource(name = "OrderService")
     private OrderService orderService;
+    @Resource(name = "userMannagerService")
+    private UserMannagerService userMannagerService;
 
-    @RequestMapping("/commondata")
+
+    @RequestMapping(value = "/commondata",produces ="application/json; charset=UTF-8")
     @ResponseBody
     public String getAndroidClientData(Model model, @Param("store_id") String store_id) throws Exception {
         //微信公众号二维码
@@ -43,11 +48,21 @@ public class Android {
         PageData query = new PageData();
         query.put("store_id",store_id);
         List<PageData> normalQueue = orderService.findNormalQueue(query);
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("curPrice", "28");
-        map.put("lineNum",normalQueue.size());
-        map.put("nQueue",normalQueue);
-        String json = JSON.toJSONString(map);
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("curPrice", "28");
+        ArrayList<HashMap<String, String>> queueList = new ArrayList<>();
+        for (PageData pageData : normalQueue) {
+            List<PageData> list = userMannagerService.findQueue(pageData);
+            for (PageData data : list) {
+                HashMap<String, String> usr = new HashMap<>();
+                usr.put("nickname",data.getString("nickname"));
+                usr.put("headimgurl",data.getString("headimgurl"));
+                queueList.add(usr);
+            }
+        }
+        resultMap.put("lineNum",normalQueue.size());
+        resultMap.put("nQueue",queueList);
+        String json = JSON.toJSONString(resultMap);
         return json;
     }
 }

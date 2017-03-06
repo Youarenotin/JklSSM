@@ -73,15 +73,15 @@ public class Mobile {
      */
     @RequestMapping("/store_list")
     public String getStoreListPage(@Param("uid") String uid, @Param("token") String token, @Param("time") String time, Model model) throws Exception {
-        //校验用户合法性
-        StringBuilder sb = new StringBuilder();
-        Object userVo = (User) userMannagerService.findOpenIdById(uid);
-        if (userVo == null || !(userVo instanceof User))
-            return "404.jsp";
-        sb.append(((User) userVo).getOpen_id()).append(Constant.solt);
-        if (!token.equals(MD5.md5(sb.toString()))) {
-            return "404.jsp";
-        }
+//        //校验用户合法性
+//        StringBuilder sb = new StringBuilder();
+//        Object userVo = (User) userMannagerService.findOpenIdById(uid);
+//        if (userVo == null || !(userVo instanceof User))
+//            return "404.jsp";
+//        sb.append(((User) userVo).getOpen_id()).append(Constant.solt);
+//        if (!token.equals(MD5.md5(sb.toString()))) {
+//            return "404.jsp";
+//        }
         model.addAttribute("uid", uid);
         model.addAttribute("token", token);
         return "store_list.jsp";
@@ -99,15 +99,15 @@ public class Mobile {
      */
     @RequestMapping("/more_read")
     public String getMorePage(@Param("uid") String uid, @Param("token") String token, @Param("time") String time, Model model) throws Exception {
-        //校验用户合法性
-        StringBuilder sb = new StringBuilder();
-        Object userVo = (User) userMannagerService.findOpenIdById(uid);
-        if (userVo == null || !(userVo instanceof User))
-            return "404.jsp";
-        sb.append(((User) userVo).getOpen_id()).append(Constant.solt);
-        if (!token.equals(MD5.md5(sb.toString()))) {
-            return "404.jsp";
-        }
+//        //校验用户合法性
+//        StringBuilder sb = new StringBuilder();
+//        Object userVo = (User) userMannagerService.findOpenIdById(uid);
+//        if (userVo == null || !(userVo instanceof User))
+//            return "404.jsp";
+//        sb.append(((User) userVo).getOpen_id()).append(Constant.solt);
+//        if (!token.equals(MD5.md5(sb.toString()))) {
+//            return "404.jsp";
+//        }
         model.addAttribute("uid", uid);
         model.addAttribute("token", token);
         return "more_read.jsp";
@@ -173,7 +173,12 @@ public class Mobile {
      * @throws Exception
      */
     @RequestMapping("/judgement")
-    public String getJudgeMentPage(Model model, @Param("jkl_order_id") String jkl_order_id, @Param("store_id") String store_id, @Param("uid") String uid, @Param("time") String time, @Param("token") String token) throws Exception {
+    public String getJudgeMentPage(Model model,
+                                   @Param("jkl_order_id") String jkl_order_id,
+                                   @Param("store_id") String store_id,
+                                   @Param("uid") String uid,
+                                   @Param("time") String time,
+                                   @Param("token") String token) throws Exception {
         //校验用户合法性
 //        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
         PageData query = new PageData();
@@ -247,7 +252,10 @@ public class Mobile {
      * @throws Exception
      */
     @RequestMapping(value = "/store_detail", method = RequestMethod.GET)
-    public String getStoreDetailPage(@Param("uid") String uid, @Param("store_id") String store_id, @Param("time") String time, @Param("token") String token) throws Exception {
+    public String getStoreDetailPage(@Param("uid") String uid,
+                                     @Param("store_id") String store_id,
+                                     @Param("time") String time,
+                                     @Param("token") String token) throws Exception {
         //校验用户合法性
 //        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
 
@@ -259,7 +267,10 @@ public class Mobile {
      * @return
      */
     @RequestMapping("/judgement_list")
-    public String getJudgementListpage(Model model, @Param("uid") String uid , @Param("time") String time , @Param("token") String token) throws Exception {
+    public String getJudgementListpage(Model model,
+                                       @Param("uid") String uid ,
+                                       @Param("time") String time ,
+                                       @Param("token") String token) throws Exception {
         //校验用户合法性
 //        if (checkUserValid(uid, token, userMannagerService)) return "404.jsp";
         model.addAttribute("uid", uid);
@@ -294,15 +305,17 @@ public class Mobile {
         return "judgement_list.jsp";
     }
 
-    public static boolean checkUserValid(@RequestParam(value = "uid") String uid, @RequestParam(value = "token") String token, UserMannagerService userMannagerService) throws Exception {
-        StringBuilder sb = new StringBuilder();
-        Object userVo = (User) userMannagerService.findOpenIdById(uid);
-        if (userVo == null || !(userVo instanceof User))
-            return true;
-        sb.append(((User) userVo).getOpen_id()).append(Constant.solt);
-        if (!(token.equalsIgnoreCase(MD5.md5(sb.toString())))) {
-            return true;
-        }
-        return false;
-    }
+//    public static boolean checkUserValid(@RequestParam(value = "uid") String uid,
+//                                         @RequestParam(value = "token") String token,
+//                                         UserMannagerService userMannagerService) throws Exception {
+//        StringBuilder sb = new StringBuilder();
+//        Object userVo = (User) userMannagerService.findOpenIdById(uid);
+//        if (userVo == null || !(userVo instanceof User))
+//            return true;
+//        sb.append(((User) userVo).getOpen_id()).append(Constant.solt);
+//        if (!(token.equalsIgnoreCase(MD5.md5(sb.toString())))) {
+//            return true;
+//        }
+//        return false;
+//    }
 }

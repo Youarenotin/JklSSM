@@ -9,7 +9,7 @@
         <result column="token" property="token"/>
     </resultMap>
     <!--新增用户-->
-    <insert id="addUser" parameterType="UserAlias" >
+    <insert id="addUser" parameterType="pd">
         INSERT  INTO
         jkl_user
         (
@@ -18,12 +18,34 @@
         token
         )
         values(
-          #{open_id},
+          #{openid},
           now(),
-          md5(concat(#{open_id},"SSDD0725"))
+          md5(concat(#{openid},"SSDD0725"))
         )
     </insert>
 
+
+    <insert id="addUserInfo" parameterType="pd">
+        INSERT  INTO
+        jkl_userinfo(
+          open_id,
+          nickname,
+          province,
+          city,
+          country,
+          headimgurl,
+          unionid
+        )VALUES (
+        #{openid},
+        #{nickname},
+        #{province},
+        #{city},
+        #{country},
+        #{headimgurl},
+        #{unionid}
+        )
+
+    </insert>
     <!---->
     <delete id="deleteById" parameterType="UserAlias" flushCache="false">
         DELETE FROM
@@ -32,7 +54,7 @@
         id=#{id}
     </delete>
 
-    <select id="findByOpenId" parameterType="String" resultMap="userResultMap">
+    <select id="findByOpenId" parameterType="pd" resultType="pd">
         SELECT
         id,
         open_id,
@@ -41,15 +63,25 @@
         FROM
          jkl_user
         WHERE
-        open_id=#{open_id}
+        open_id=#{openid}
     </select>
 
-    <select id="findOpenidById" parameterType="String" resultMap="userResultMap">
+    <select id="findOpenIdById"  parameterType="String" resultMap="userResultMap">
         SELECT
         *
         FROM
         jkl_user
         WHERE
-        id=#{id}
+        id=#{uid}
+    </select>
+
+    <select id="findQueue" parameterType="pd" resultType="pd">
+       select
+       i.headimgurl,
+       i.nickname
+       from
+       jkl_userinfo i
+       WHERE
+       i.open_id=(select u.open_id from jkl_user u WHERE u.id=#{uid})
     </select>
 </mapper>

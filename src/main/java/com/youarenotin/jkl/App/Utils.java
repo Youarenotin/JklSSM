@@ -10,6 +10,8 @@ import org.dom4j.io.SAXReader;
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,5 +68,19 @@ public class Utils {
         xStream.alias("xml",TextMessage.class);
         return xStream.toXML(vo);
 
+    }
+
+    /**
+     * 获取当前日期
+     * @return
+     */
+    public static String getDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = new Date();
+       return sdf.format(date);
+    }
+
+    public static void main(String[] args) {
+        System.out.print(getDate());
     }
 }

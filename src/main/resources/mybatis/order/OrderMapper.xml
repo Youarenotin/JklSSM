@@ -30,6 +30,10 @@
         jkl_order
         WHERE
         uid=#{uid}
+        AND
+        state='0'
+        ORDER BY
+        create_time
     </select>
 
     <update id="updateStateByOrderid" parameterType="pd">

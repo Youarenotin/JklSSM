@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.sun.javafx.collections.annotations.ReturnsUnmodifiableCollection;
 import com.youarenotin.jkl.controller.base.BaseController;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,17 +19,18 @@ import java.util.Map;
 public class FacePayController extends BaseController {
 
     @RequestMapping(value = "/face_pay")
-    public String doFacepay(HttpServletRequest request, HttpServletResponse response, String store_id) {
+    public String doFacepay(Model model, HttpServletRequest request, HttpServletResponse response, String store_id) {
         response.setContentType("UTF-8");
         //查询当前店铺单价
         //微信认证获取code state中传入store_id
         //获取到access_token
         //查询用户openid 关联到自己库中
+        model.addAttribute("store_id", store_id);
         if (request.getHeader("user-agent").contains("MicroMessenger")) {
-          return   doWxFacePay(store_id);
+            return doWxFacePay(store_id);
         } else if (request.getHeader("user-agent").contains("AlipayClient")) {
-         return    doAliFacePay(store_id);
-        }else {
+            return doAliFacePay(store_id);
+        } else {
             return "请用微信或支付宝打开!";
         }
     }
@@ -38,7 +40,7 @@ public class FacePayController extends BaseController {
     }
 
     private String doWxFacePay(String store_id) {
-        return  "";
+        return "";
     }
 
 //    @RequestMapping("/wxpay")
