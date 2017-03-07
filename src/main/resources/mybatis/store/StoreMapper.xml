@@ -13,5 +13,12 @@
         id=#{id}
     </select>
 
-    
+    <select  id="findPrice" parameterType="pd" resultType="pd">
+        SELECT
+        *
+        FROM
+        jkl_price
+        WHERE
+        store_id=#{store_id}
+    </select>
 </mapper>

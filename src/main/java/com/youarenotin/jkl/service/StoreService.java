@@ -17,4 +17,8 @@ public class StoreService {
     public PageData findStoreByid(PageData pd) throws Exception {
         return (PageData) dao.findForObject("Store.findById",pd);
     }
+
+    public PageData findPrice(PageData pd) throws Exception {
+        return (PageData) dao.findForObject("Store.findPrice",pd);
+    }
 }
