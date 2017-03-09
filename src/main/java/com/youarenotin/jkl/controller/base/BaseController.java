@@ -1,8 +1,10 @@
 package com.youarenotin.jkl.controller.base;
 
 import com.youarenotin.jkl.Entity.Page;
+import com.youarenotin.jkl.Entity.SysUserEntity;
 import com.youarenotin.jkl.util.Logger;
 import com.youarenotin.jkl.util.PageData;
+import com.youarenotin.jkl.util.ShiroUtils;
 import com.youarenotin.jkl.util.UuidUtil;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -13,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by dell on 2/24 0024.
  */
-public class BaseController {
+public abstract class BaseController {
     protected Logger logger = Logger.getLogger(this.getClass());
 
     private static final long serialVersionUID = 6357869213649815390L;
@@ -67,5 +69,17 @@ public class BaseController {
     public static void logAfter(Logger logger){
         logger.info("end");
         logger.info("");
+    }
+
+    protected SysUserEntity getUser() {
+        return ShiroUtils.getUserEntity();
+    }
+
+    protected Long getUserId() {
+        return getUser().getUserId();
+    }
+
+    protected  String getUserName(){
+        return getUser().getUsername();
     }
 }

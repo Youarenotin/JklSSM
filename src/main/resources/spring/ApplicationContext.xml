@@ -32,5 +32,5 @@
     </bean>
 
     <import resource="spring-jdbc.xml"/>
-    <!--<import resource="spring-shiro.xml"/>-->
+    <import resource="spring-shiro.xml"/>
 </beans>

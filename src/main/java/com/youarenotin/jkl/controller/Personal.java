@@ -66,10 +66,10 @@ public class Personal {
 
 
 
-    @RequestMapping("/index")
-    public String index(HttpSession session) {
-        return "index.jsp";
-    }
+//    @RequestMapping("/index")
+//    public String index(HttpSession session) {
+//        return "index.jsp";
+//    }
 
     @RequestMapping(value = "/Oauth2", method = RequestMethod.GET)
     public String welcome() {
@@ -83,10 +83,10 @@ public class Personal {
         return "personal.jsp";
     }
 
-    @RequestMapping("/redirect")
-    public String OAuth() {
-        return "redirect:/index.jsp";
-    }
+//    @RequestMapping("/redirect")
+//    public String OAuth() {
+//        return "redirect:/index.jsp";
+//    }
 
     @RequestMapping(value = "/setting", method = RequestMethod.GET)
     public String setting() {
