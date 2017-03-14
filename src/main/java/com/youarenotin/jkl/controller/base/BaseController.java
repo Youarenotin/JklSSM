@@ -71,15 +71,15 @@ public abstract class BaseController {
         logger.info("");
     }
 
-    protected SysUserEntity getUser() {
+    protected PageData getUser() {
         return ShiroUtils.getUserEntity();
     }
 
     protected Long getUserId() {
-        return getUser().getUserId();
+        return (Long) getUser().get("user_id");
     }
 
     protected  String getUserName(){
-        return getUser().getUsername();
+        return (String) getUser().get("username");
     }
 }
