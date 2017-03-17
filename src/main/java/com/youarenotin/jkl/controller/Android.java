@@ -1,7 +1,11 @@
 package com.youarenotin.jkl.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.domain.DataTag;
 import com.youarenotin.jkl.App.Constant;
+import com.youarenotin.jkl.Entity.AndroidVo;
 import com.youarenotin.jkl.controller.base.BaseController;
 import com.youarenotin.jkl.service.OrderService;
 import com.youarenotin.jkl.service.StoreService;
@@ -36,7 +40,7 @@ public class Android extends BaseController {
 
     @RequestMapping(value = "/commondata",produces ="application/json; charset=UTF-8")
     @ResponseBody
-    public String getAndroidClientData(Model model, @Param("store_id") String store_id) throws Exception {
+    public AndroidVo getAndroidClientData(Model model, @Param("store_id") String store_id) throws Exception {
         logBefore(logger,"安卓端请求开始");
         //微信公众号二维码
         //扫码支付二维码
@@ -54,6 +58,8 @@ public class Android extends BaseController {
         List<PageData> normalQueue = orderService.findNormalQueue(query);
         HashMap<String, Object> resultMap = new HashMap<>();
         ArrayList<HashMap<String, String>> queueList = new ArrayList<>();
+        ArrayList<HashMap<String, String>> rqueueList = new ArrayList<>();
+
         for (PageData pageData : normalQueue) {
             List<PageData> list = userMannagerService.findQueue(pageData);
             for (PageData data : list) {
@@ -64,16 +70,38 @@ public class Android extends BaseController {
             }
         }
         PageData price = storeService.findPrice(query);
-        resultMap.put("curPrice", price.get("current_price").toString());
-        resultMap.put("maxPrice",price.get("max_price").toString());
-        resultMap.put("minPrice",price.get("min_price").toString());
-        resultMap.put("disCount",price.get("discount").toString());
-        resultMap.put("lineNum",normalQueue.size());
-        resultMap.put("nQueue",queueList);
-        resultMap.put("rQueue",queueList);
-        String json = JSON.toJSONString(resultMap);
-        System.out.println(json);
+        AndroidVo androidVo = new AndroidVo();
+        AndroidVo.DataEntity dataEntity = new AndroidVo.DataEntity();
+        AndroidVo.StatusEntity statusEntity = new AndroidVo.StatusEntity();
+        androidVo.setStatus(statusEntity);
+        androidVo.setData(dataEntity);
+        List<AndroidVo.DataEntity.NQueueBean> nQueueBeanList = new ArrayList<AndroidVo.DataEntity.NQueueBean>();
+        List<AndroidVo.DataEntity.NQueueBean> rQueueBeanList = new ArrayList<AndroidVo.DataEntity.NQueueBean>();
+        for (PageData pageData : normalQueue) {
+            List<PageData> list = userMannagerService.findQueue(pageData);
+            for (PageData data : list) {
+                AndroidVo.DataEntity.NQueueBean bean = new AndroidVo.DataEntity.NQueueBean();
+                bean.setHeadimgurl(data.getString("headimgurl"));
+                bean.setNickname(data.getString("nickname"));
+                nQueueBeanList.add(bean);
+            }
+        }
+        statusEntity.setCode("0");
+        statusEntity.setMessage("123");
+        dataEntity.setCurPrice(price.get("current_price").toString());
+        dataEntity.setMaxPrice(price.get("max_price").toString());
+        dataEntity.setMinPrice(price.get("min_price").toString());
+        dataEntity.setDisCount(price.get("discount").toString());
+        dataEntity.setLineNum(normalQueue.size());
+        dataEntity.setNQueue(nQueueBeanList);
+        dataEntity.setRQueue(rQueueBeanList);
+        String json = JSON.toJSONString(androidVo);
         logAfter(logger);
-        return json;
+        return androidVo;
+    }
+
+    public static class  Queue{
+        private  String nickname;
+        private String headimgurl;
     }
 }
